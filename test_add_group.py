@@ -8,12 +8,12 @@ from selenium.common.exceptions import NoAlertPresentException
 import unittest, time, re
 
 
-class 243(unittest.TestCase):
+class test_add_group(unittest.TestCase):
     def setUp(self):
         self.wd = webdriver.Firefox()
         self.wd.implicitly_wait(30)
 
-    def test_243(self):
+    def test_test_add_group(self):
         wd = self.wd
         wd.get("http://localhost/addressbook/group.php?selected%5B%5D=1&delete=Delete+group%28s%29")
         wd.find_element_by_name("user").click()
