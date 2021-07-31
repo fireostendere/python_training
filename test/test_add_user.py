@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from selenium import webdriver
 import unittest
-from user import User
+from model.user import User
 
 class test_add_user(unittest.TestCase):
     def setUp(self):
