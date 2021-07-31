@@ -22,7 +22,7 @@ class UserHelper:
         wd.find_element_by_name("nickname").send_keys(user.nickname)
         # submit form
         wd.find_element_by_name("submit").click()
-        self.return_to_home_page()
+        self.app.open_home_page()
 
     def return_to_home_page(self):
         wd = self.app.wd
