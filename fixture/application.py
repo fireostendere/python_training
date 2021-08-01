@@ -2,6 +2,8 @@ from selenium import webdriver
 from fixture.session import SessionHelper
 from fixture.group import GroupHelper
 from fixture.user import UserHelper
+
+
 class Application:
 
     def __init__(self):
@@ -14,8 +16,6 @@ class Application:
     def open_home_page(self):
         wd = self.wd
         wd.get("http://localhost")
-
-
 
     def destroy(self):
         self.wd.quit()
