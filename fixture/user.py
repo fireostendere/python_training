@@ -10,47 +10,48 @@ class UserHelper:
         wd = self.app.wd
         # fill form
         self.open_add_user_page()
-        wd.find_element_by_name("firstname").click()
-        wd.find_element_by_name("firstname").clear()
-        wd.find_element_by_name("firstname").send_keys(user.firstname)
-        wd.find_element_by_name("middlename").clear()
-        wd.find_element_by_name("middlename").send_keys(user.middlename)
-        wd.find_element_by_name("lastname").clear()
-        wd.find_element_by_name("lastname").send_keys(user.lastname)
-        wd.find_element_by_name("nickname").clear()
-        wd.find_element_by_name("nickname").send_keys(user.nickname)
+        self.fill_group_form(user)
         # submit form
         wd.find_element_by_name("submit").click()
         self.app.open_home_page()
+
+    def fill_group_form(self, user):
+        wd = self.app.wd
+        self.change_field_value("firstname", user.firstname)
+        self.change_field_value("middlename", user.middlename)
+        self.change_field_value("lastname", user.lastname)
+        self.change_field_value("nickname", user.nickname)
+
+    def change_field_value(self, field_name, text):
+        wd = self.app.wd
+        if text is not None:
+            wd.find_element_by_name(field_name).click()
+            wd.find_element_by_name(field_name).clear()
+            wd.find_element_by_name(field_name).send_keys(text)
 
     def delete_first(self):
         wd = self.app.wd
         self.app.open_home_page()
         # select first user
-        wd.find_element_by_name("selected[]").click()
+        self.select_first_user()
         # submit deletion
         wd.find_element_by_xpath("//input[@value='Delete']").click()
         # accept del
         wd.switch_to_alert().accept()
         self.app.open_home_page()
 
+    def select_first_user(self):
+        wd = self.app.wd
+        wd.find_element_by_name("selected[]").click()
+
     def mod_first(self, user):
         wd = self.app.wd
         self.app.open_home_page()
-        # select first user
-        wd.find_element_by_name("selected[]").click()
+        self.select_first_user()
         # submit mod
         wd.find_element_by_xpath("//img[@alt='Edit']").click()
         # fill form
-        wd.find_element_by_name("firstname").click()
-        wd.find_element_by_name("firstname").clear()
-        wd.find_element_by_name("firstname").send_keys(user.firstname)
-        wd.find_element_by_name("middlename").clear()
-        wd.find_element_by_name("middlename").send_keys(user.middlename)
-        wd.find_element_by_name("lastname").clear()
-        wd.find_element_by_name("lastname").send_keys(user.lastname)
-        wd.find_element_by_name("nickname").clear()
-        wd.find_element_by_name("nickname").send_keys(user.nickname)
+        self.fill_group_form(user)
         # submit form
         wd.find_element_by_name("update").click()
         # return to home page
@@ -59,3 +60,8 @@ class UserHelper:
     def return_to_home_page(self):
         wd = self.app.wd
         wd.find_element_by_link_text("home").click()
+
+    def count(self):
+        wd = self.app.wd
+        self.app.open_home_page()
+        return len(wd.find_elements_by_name("selected[]"))
