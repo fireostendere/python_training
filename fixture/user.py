@@ -17,6 +17,7 @@ class UserHelper:
         # submit form
         wd.find_element_by_name("submit").click()
         self.app.open_home_page()
+        self.user_cache = None
 
     def fill_group_form(self, user):
         wd = self.app.wd
@@ -42,6 +43,7 @@ class UserHelper:
         # accept del
         wd.switch_to_alert().accept()
         self.app.open_home_page()
+        self.user_cache = None
 
     def select_first_user(self):
         wd = self.app.wd
@@ -59,20 +61,24 @@ class UserHelper:
         wd.find_element_by_name("update").click()
         # return to home page
         self.app.open_home_page()
+        self.user_cache = None
 
     def count(self):
         wd = self.app.wd
         self.app.open_home_page()
         return len(wd.find_elements_by_name("selected[]"))
 
+    user_cache = None
+
     def get_user_list(self):
-        wd = self.app.wd
-        self.app.open_home_page()
-        user = []
-        for element in wd.find_elements_by_name("entry"):
-            cells = element.find_elements_by_tag_name("td")
-            firstname = cells[2]
-            lastname = cells[1]
-            id = element.find_element_by_name("selected[]").get_attribute("value")
-            user.append(User(firstname=firstname.text, lastname=lastname.text, id=id))
-        return user
+        if self.user_cache is None:
+            wd = self.app.wd
+            self.app.open_home_page()
+            self.user_cache = []
+            for element in wd.find_elements_by_name("entry"):
+                cells = element.find_elements_by_tag_name("td")
+                firstname = cells[2]
+                lastname = cells[1]
+                id = element.find_element_by_name("selected[]").get_attribute("value")
+                self.user_cache.append(User(firstname=firstname.text, lastname=lastname.text, id=id))
+        return list(self.user_cache)
