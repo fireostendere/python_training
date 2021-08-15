@@ -2,6 +2,11 @@ from model.user import User
 
 
 def test_mod_first_user(app):
-    if app.user.count() == 0:
-        app.user.create(User(firstname="test"))
-    app.user.mod_first(User(firstname="test_mod", middlename="test_mod", lastname="test_mod", nickname="test_mod"))
+    old_users = app.user.get_user_list()
+    user = User(firstname="test_mod", middlename="test_mod", lastname="test_mod", nickname="test_mod")
+    user.id = old_users[0].id
+    app.user.modify_first(user)
+    new_users = app.user.get_user_list()
+    assert len(old_users) == len(new_users)
+    old_users[0] = user
+    assert sorted(old_users, key=User.id_or_max) == sorted(new_users, key=User.id_or_max)
