@@ -13,13 +13,13 @@ class UserHelper:
         wd = self.app.wd
         # fill form
         self.open_add_user_page()
-        self.fill_group_form(user)
+        self.fill_user_form(user)
         # submit form
         wd.find_element_by_name("submit").click()
         self.app.open_home_page()
         self.user_cache = None
 
-    def fill_group_form(self, user):
+    def fill_user_form(self, user):
         wd = self.app.wd
         self.change_field_value("firstname", user.firstname)
         self.change_field_value("middlename", user.middlename)
@@ -34,10 +34,13 @@ class UserHelper:
             wd.find_element_by_name(field_name).send_keys(text)
 
     def delete_first(self):
+        self.delete_user_by_index(0)
+
+    def delete_user_by_index(self, index):
         wd = self.app.wd
         self.app.open_home_page()
         # select first user
-        self.select_first_user()
+        self.select_user_by_index(index)
         # submit deletion
         wd.find_element_by_xpath("//input[@value='Delete']").click()
         # accept del
@@ -45,23 +48,26 @@ class UserHelper:
         self.app.open_home_page()
         self.user_cache = None
 
-    def select_first_user(self):
+    def select_user_by_index(self, index):
         wd = self.app.wd
-        wd.find_element_by_name("selected[]").click()
+        wd.find_elements_by_name("selected[]")[index].click()
 
-    def mod_first(self, user):
+    def modify_user_by_index(self, index, user):
         wd = self.app.wd
         self.app.open_home_page()
-        self.select_first_user()
+        self.select_user_by_index(index)
         # submit mod
-        wd.find_element_by_xpath("//img[@alt='Edit']").click()
+        wd.find_elements_by_xpath("//img[@alt='Edit']")[index].click()
         # fill form
-        self.fill_group_form(user)
+        self.fill_user_form(user)
         # submit form
         wd.find_element_by_name("update").click()
         # return to home page
         self.app.open_home_page()
         self.user_cache = None
+
+    def mod_first(self, user):
+        self.mod_user_by_index(0)
 
     def count(self):
         wd = self.app.wd
