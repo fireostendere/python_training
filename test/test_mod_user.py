@@ -1,16 +1,23 @@
 from model.contact import Contact
-from random import randrange
+import random
 
 
-def test_mod_contact(app):
-    old_contacts = app.contact.get_contact_list()
-    if app.contact.count() == 0:
+def test_mod_contact(app, db, check_ui):
+    if len(db.get_contact_list()) == 0:
         app.contact.create(Contact(firstname="test"))
-    index = randrange(len(old_contacts))
-    contact = Contact(firstname="test_mod", middlename="test_mod", lastname="test_mod", nickname="test_mod")
-    contact.id = old_contacts[index].id
-    app.contact.modify_contact_by_index(index, contact)
-    assert len(old_contacts) == app.contact.count()
-    new_contacts = app.contact.get_contact_list()
-    old_contacts[index] = contact
-    assert sorted(old_contacts, key=Contact.id_or_max) == sorted(new_contacts, key=Contact.id_or_max)
+    old_contacts = db.get_contact_list()
+    contact = random.choice(old_contacts)
+    app.contact.modify_contact_by_id(contact.id,
+                                     Contact(firstname="mod", lastname="mod",
+                                             homephone="mod", mobilephone="mod", workphone="mod",
+                                             secondaryphone="mod",
+                                             email="mod", email2="mod",
+                                             email3="mod",
+                                             address="mod"))
+    new_contacts = db.get_contact_list()
+    assert len(old_contacts) == len(new_contacts)
+    old_contacts = db.get_contact_list()
+    assert old_contacts == new_contacts
+    if check_ui:
+        assert sorted(new_contacts, key=Contact.id_or_max) == sorted(app.group.get_contact_list(),
+                                                                     key=Contact.id_or_max)
