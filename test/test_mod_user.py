@@ -16,8 +16,8 @@ def test_mod_contact(app, db, check_ui):
                                              address="mod"))
     new_contacts = db.get_contact_list()
     assert len(old_contacts) == len(new_contacts)
-    old_contacts = db.get_contact_list()
-    assert old_contacts == new_contacts
+#    old_contacts = db.get_contact_list()
+#    assert old_contacts == new_contacts
     if check_ui:
         assert sorted(new_contacts, key=Contact.id_or_max) == sorted(app.group.get_contact_list(),
                                                                      key=Contact.id_or_max)
