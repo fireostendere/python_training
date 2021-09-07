@@ -7,7 +7,6 @@ def test_mod_contact(app, db, check_ui):
         app.contact.create(Contact(firstname="test"))
     old_contacts = db.get_contact_list()
     contact = random.choice(old_contacts)
-    old_contact = contact
     app.contact.modify_contact_by_id(contact.id,
                                      Contact(firstname="mod", lastname="mod",
                                              homephone="mod", mobilephone="mod", workphone="mod",
@@ -16,7 +15,9 @@ def test_mod_contact(app, db, check_ui):
                                              email3="mod",
                                              address="mod"))
     new_contacts = db.get_contact_list()
+    assert len(old_contacts) == len(new_contacts)
     assert sorted(old_contacts, key=Contact.id_or_max) != sorted(new_contacts, key=Contact.id_or_max)
     if check_ui:
         assert sorted(new_contacts, key=Contact.id_or_max) != sorted(app.group.get_contact_list(),
                                                                      key=Contact.id_or_max)
+        assert len(old_contacts) == len(app.group.get_contact_list())
