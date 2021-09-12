@@ -1,17 +1,16 @@
-# -*- coding: utf-8 -*-
 from model.group import Group
 import random
 
 
 def test_modify_group_name(app, db, check_ui):
     if len(db.get_group_list()) == 0:
-        app.group.create(Group(name="test"))
+        app.group.create(Group(name="111", header="222", footer="333"))
     old_groups = db.get_group_list()
     group = random.choice(old_groups)
-    app.group.modify_group_by_id(group.id, Group(name="NewGroup"))
+    app.group.modify_group_by_id(group.id, Group(name="mod", header="mod", footer="mod"))
     new_groups = db.get_group_list()
     assert len(old_groups) == len(new_groups)
-    assert sorted(old_groups, key=Group.id_or_max) != sorted(new_groups, key=Group.id_or_max)
+    old_groups = db.get_group_list()
+    assert old_groups == new_groups
     if check_ui:
-        assert len(app.group.get_group_list()) == len(new_groups)
-        assert sorted(new_groups, key=Group.id_or_max) != sorted(app.group.get_group_list(), key=Group.id_or_max)
+        assert sorted(new_groups, key=Group.id_or_max) == sorted(app.group.get_group_list(), key=Group.id_or_max)
