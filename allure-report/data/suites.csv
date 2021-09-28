@@ -1,0 +1,7 @@
+"Status","Start Time","Stop Time","Duration in ms","Parent Suite","Suite","Sub Suite","Test Class","Test Method","Name","Description"
+"passed","Tue Sep 28 20:57:44 GMT+04:00 2021","Tue Sep 28 20:57:45 GMT+04:00 2021","881","test","test_add_group","","","","test_add_group[None:nameDha;headerfr JQC ;footer8zr0rvgWLg7]",""
+"passed","Tue Sep 28 20:57:45 GMT+04:00 2021","Tue Sep 28 20:57:45 GMT+04:00 2021","853","test","test_add_group","","","","test_add_group[None:name6;headerqdQQ vxb8xSCrA;footer3 r ]",""
+"passed","Tue Sep 28 20:57:43 GMT+04:00 2021","Tue Sep 28 20:57:44 GMT+04:00 2021","871","test","test_add_group","","","","test_add_group[None:nameWmnJ2G yI;headerleY6uU;footerr7vq7]",""
+"passed","Tue Sep 28 20:57:42 GMT+04:00 2021","Tue Sep 28 20:57:43 GMT+04:00 2021","875","test","test_add_group","","","","test_add_group[None:namea uYGw;headertQrzPSYNdKRISfYV mW;footerf9 ]",""
+"passed","Tue Sep 28 20:57:41 GMT+04:00 2021","Tue Sep 28 20:57:42 GMT+04:00 2021","865","test","test_add_group","","","","test_add_group[None:name;headerqx  3w eX;footer n4 3mWidOAu]",""
+"passed","Tue Sep 28 20:57:40 GMT+04:00 2021","Tue Sep 28 20:57:41 GMT+04:00 2021","956","test","test_add_group","","","","test_add_group[None:;;]",""
